@@ -1,0 +1,33 @@
+{
+  "name": "content-state",
+  "version": "0.9.0",
+  "description": "A library for working with IIIF Content State annotations",
+  "main": "dist/index_bundle.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/workergnome/content-state"
+  },
+  "keywords": [
+    "IIIF",
+    "contentState"
+  ],
+  "sideEffects": false,
+  "author": "David Newbury",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "babel-jest": "^27.0.5",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.15.1",
+    "jest": "^27.0.5",
+    "jest-fetch-mock": "^3.0.3",
+    "prettier": "^2.1.1",
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
