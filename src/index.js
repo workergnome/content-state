@@ -98,7 +98,7 @@ function isContentStateAnnotation(annotation) {
   return true;
 }
 
-function extractManifests(annotation) {
+export function extractManifests(annotation) {
   let targets;
 
   if (Array.isArray(annotation.target)) {
@@ -239,10 +239,7 @@ export async function parseContentState(input) {
   annotation = expandAnnotation(annotation);
   validateAnnotation(annotation);
 
-  return {
-    manifests: extractManifests(annotation),
-    annotation: annotation,
-  };
+  return annotation;
 }
 
 export default parseURL;

@@ -4,6 +4,7 @@ import {
   encodeContentState,
   encodeLink,
   ContentStateError,
+  extractManifests,
 } from "./index.js";
 import "regenerator-runtime/runtime";
 
@@ -119,21 +120,21 @@ describe("content-state.js", () => {
   });
   it("extracts the manifest for simple examples", async () => {
     await expect(parseContentState(encode(basicJSON))).resolves.toMatchObject({
-      manifests: ["https://example.org/iiif/item1/manifest"],
+      target: { id: "https://example.org/iiif/item1/manifest" },
     });
   });
 
   it("extracts the manifest for simple examples", async () => {
     await expect(parseContentState(encode(minimalJSON))).resolves.toMatchObject(
       {
-        manifests: ["https://example.org/iiif/item1/manifest"],
+        target: { id: "https://example.org/iiif/item1/manifest" },
       }
     );
   });
   it("handles multiple motivations", async () => {
     basicJSON.motivation = ["commenting", "contentState"];
     await expect(parseContentState(encode(basicJSON))).resolves.toMatchObject({
-      manifests: ["https://example.org/iiif/item1/manifest"],
+      target: { id: "https://example.org/iiif/item1/manifest" },
     });
   });
   it("handles multiple contexts", async () => {
@@ -142,7 +143,7 @@ describe("content-state.js", () => {
       "otherContext",
     ];
     await expect(parseContentState(encode(basicJSON))).resolves.toMatchObject({
-      manifests: ["https://example.org/iiif/item1/manifest"],
+      target: { id: "https://example.org/iiif/item1/manifest" },
     });
   });
 
@@ -157,7 +158,7 @@ describe("content-state.js", () => {
       fetch.mockResponseOnce(JSON.stringify(basicJSON));
       const val = await parseContentState(basicExample);
       expect(fetch.mock.calls.length).toEqual(1);
-      expect(val.annotation).toMatchObject(basicJSON);
+      expect(val).toMatchObject(basicJSON);
     });
   });
 
@@ -168,14 +169,18 @@ describe("content-state.js", () => {
         "https://example.org/iiif/item2/manifest",
       ];
       const val = await parseContentState(encode(multiJSON));
-      expect(val.manifests).toEqual(expect.arrayContaining(allManifests));
+      expect(extractManifests(val)).toEqual(
+        expect.arrayContaining(allManifests)
+      );
     });
     it("dedupes manifests from multiJSON", async () => {
       const allManifests = ["https://example.org/iiif/item1/manifest"];
       multiJSON.target[1].partOf[0].id =
         "https://example.org/iiif/item1/manifest";
       const val = await parseContentState(encode(multiJSON));
-      expect(val.manifests).toEqual(expect.arrayContaining(allManifests));
+      expect(extractManifests(val)).toEqual(
+        expect.arrayContaining(allManifests)
+      );
     });
   });
 
@@ -183,26 +188,26 @@ describe("content-state.js", () => {
     it("expands minimalJSON", async () => {
       delete basicJSON.id;
       const val = await parseContentState(encode(minimalJSON));
-      expect(val.annotation).toMatchObject(basicJSON);
+      expect(val).toMatchObject(basicJSON);
     });
     it("expands minimalAnnotation", async () => {
       delete basicJSON.id;
       basicJSON.target = minimalAnnotation;
       const val = await parseContentState(encode(minimalAnnotation));
-      expect(val.annotation).toMatchObject(basicJSON);
+      expect(val).toMatchObject(basicJSON);
     });
     it("expands basic JSON", async () => {
       const val = await parseContentState(encode(basicJSON));
-      expect(val.annotation).toMatchObject(basicJSON);
+      expect(val).toMatchObject(basicJSON);
     });
     it("expands multi JSON", async () => {
       const val = await parseContentState(encode(multiJSON));
-      expect(val.annotation).toMatchObject(multiJSON);
+      expect(val).toMatchObject(multiJSON);
     });
     it("adds back in context", async () => {
       delete basicJSON["@context"];
       const val = await parseContentState(encode(basicJSON));
-      expect(val.annotation).toMatchObject(basicJSON);
+      expect(val).toMatchObject(basicJSON);
     });
   });
 
