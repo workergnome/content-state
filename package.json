@@ -1,11 +1,13 @@
 {
   "name": "content-state",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A library for working with IIIF Content State annotations",
-  "main": "dist/index_bundle.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack"
+    "build": "webpack",
+    "jsdoc": "jsdoc-md -s src -t API",
+    "docs": "jsdoc2md src/*.js > api.md"
   },
   "repository": {
     "type": "git",
@@ -20,14 +22,20 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.14.5",
     "@babel/preset-env": "^7.14.7",
     "babel-jest": "^27.0.5",
     "babel-loader": "^8.2.2",
     "core-js": "^3.15.1",
     "jest": "^27.0.5",
     "jest-fetch-mock": "^3.0.3",
+    "jsdoc-md": "^11.0.0",
+    "jsdoc-to-markdown": "^7.0.1",
     "prettier": "^2.1.1",
     "webpack": "^5.40.0",
     "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.8"
   }
 }

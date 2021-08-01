@@ -4,7 +4,7 @@ module.exports = {
   entry: path.resolve(__dirname, "src/index.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index_bundle.js",
+    filename: "index.js",
     library: "$",
     libraryTarget: "umd",
   },
@@ -17,5 +17,5 @@ module.exports = {
       },
     ],
   },
-  mode: "development",
+  mode: "production",
 };
