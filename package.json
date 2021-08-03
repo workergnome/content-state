@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "jsdoc": "jsdoc-md -s src -t API",
-    "docs": "jsdoc2md src/*.js > api.md"
+    "jsdoc": "jsdoc-md -s src -t API"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,6 @@
     "jest": "^27.0.5",
     "jest-fetch-mock": "^3.0.3",
     "jsdoc-md": "^11.0.0",
-    "jsdoc-to-markdown": "^7.0.1",
     "prettier": "^2.1.1",
     "webpack": "^5.40.0",
     "webpack-cli": "^4.7.2"
